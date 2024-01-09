@@ -1,0 +1,53 @@
+1. How to find duplicates record in a table.
+
+select emp_id, emp_name, count(*)
+from employee table
+group by emp_id, emp_name
+having  count(*) >1;
+
+Note: HAVING filters on aggregate functions should come after Group by clause
+
+or
+
+SELECT a.*
+FROM students a
+JOIN (SELECT name, gender, COUNT(*)
+FROM students 
+GROUP BY name, gender
+HAVING count(*) > 1 ) b
+ON a.name = b.name
+AND a.gender = b.gender
+ORDER BY a.id;
+
+Note: The first SELECT simply picks all of the columns in the user's table and then does an inner join with the duplicate data table from the first query. The two copies of the table must be identified by aliases (in this case, a and b) since we are connecting the table to itself.
+
+
+2. Delete duplicate records from the table.
+
+Delete from customer_data
+Where rowid not in
+(select max(rowid) from customer_data group_by cust_id);
+
+
+3. Difference between union and union all
+
+4. Difference between rank, rwonumber, dense_rank
+
+5. Find records in a table which are not present in another table
+
+Select employeeSalary. * from employeeSalary
+Left join managerSalary
+On employeeSalary.empID and managerSalary.empID
+Where managerSalary.empID is NULL; (this is to minus the records common in the both the table)
+
+6. Write an SQL query to fetch all the Employees who are also managers from the EmployeeDetails table.
+
+Select distinct E.FullName from EmployeeDetails E
+Inner join EmployeeDetails M
+Where E.empid = M.ManagerID;
+
+7. Difference between inner join and left join
+
+8. update a table and swap gender values
+
+9. Find employees whose salary is higer than thier manager salary
